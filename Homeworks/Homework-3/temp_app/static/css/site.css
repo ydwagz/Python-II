@@ -1,0 +1,73 @@
+ :root {
+    --ink: #172820;
+    --muted: #718078;
+    --green: #336b51;
+    --lime: #d8eea8;
+    --paper: #f6f7f1;
+    --line: #e4e9df;
+}
+
+* { box-sizing: border-box; }
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+.site-nav { padding: 20px 0; background: rgba(246,247,241,.92); border-bottom: 1px solid var(--line); }
+.nav-container { max-width: 1120px; }
+.brand-mark { display: inline-flex; align-items: center; gap: 9px; color: var(--ink) !important; font-family: 'Manrope', sans-serif; font-size: 1.4rem; font-weight: 800; letter-spacing: -.06em; }
+.brand-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 5px #336b5115; }
+.brand-period { color: #8eaf56; margin-left: -9px; }
+.nav-links { align-items: center; gap: 8px; }
+.nav-links .nav-link { padding: 10px 16px !important; color: #66736b !important; font-size: .92rem; font-weight: 600; border-radius: 999px; transition: .2s ease; }
+.nav-links .nav-link:hover, .nav-links .nav-link:focus { color: var(--ink) !important; background: #eaf0e3; }
+.navbar-toggler { border: 1px solid var(--line); box-shadow: none !important; }
+.page-shell { flex: 1; }
+.content-wrap { max-width: 1020px; padding-top: 92px; padding-bottom: 104px; }
+.eyebrow { display: flex; align-items: center; gap: 11px; margin-bottom: 22px; color: var(--green); font-size: .72rem; font-weight: 700; letter-spacing: .16em; }
+.eyebrow-line { width: 29px; height: 1px; background: #8eaf56; }
+.page-heading-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 44px; }
+.page-title { margin: 0; font-family: 'Manrope', sans-serif; font-size: clamp(2.8rem, 7vw, 5.6rem); line-height: 1.04; letter-spacing: -.075em; font-weight: 700; }
+.page-title > span { color: var(--green); }
+.page-lead { max-width: 540px; margin: 18px 0 0; color: var(--muted); font-size: 1.08rem; line-height: 1.7; }
+.heading-stamp { display: grid; width: 84px; height: 84px; place-items: center; border: 1px solid #cdd8c6; border-radius: 50%; color: var(--green); font-family: 'Manrope', sans-serif; font-size: 1.35rem; font-weight: 800; transform: rotate(10deg); }
+.contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.contact-card { position: relative; min-height: 190px; padding: 28px; overflow: hidden; background: #fff; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 10px 30px #243b2c08; transition: transform .2s ease, box-shadow .2s ease; }
+.contact-card:hover { transform: translateY(-4px); box-shadow: 0 16px 34px #243b2c12; }
+.card-index { position: absolute; top: 27px; right: 27px; color: #a1b198; font-size: .75rem; font-weight: 700; }
+.contact-label { margin: 14px 0 10px; color: var(--muted); font-size: .82rem; font-weight: 600; }
+.contact-card h2 { margin: 0; overflow-wrap: anywhere; font-family: 'Manrope', sans-serif; font-size: clamp(1rem, 1.7vw, 1.28rem); font-weight: 700; letter-spacing: -.04em; }
+.hobbies-wrap { padding-top: 92px; }
+.hobby-panel { position: relative; display: flex; min-height: 440px; align-items: center; overflow: hidden; padding: clamp(34px, 7vw, 78px); border-radius: 16px; color: #f5f7ed; background: #234a39; }
+.hobby-copy { position: relative; z-index: 1; max-width: 590px; }
+.panel-kicker { margin: 0 0 22px; color: #c5d3b5; font-size: .88rem; font-weight: 600; }
+.panel-kicker span { margin-left: 7px; color: var(--lime); }
+.hobby-panel .page-title { font-size: clamp(2.8rem, 7vw, 5.6rem); }
+.hobby-panel .page-title > span { color: var(--lime); }
+.hobby-panel .page-lead { max-width: 440px; color: #c7d3ca; }
+.hobby-art { position: absolute; top: 50%; right: 7%; width: 300px; height: 300px; transform: translateY(-50%); }
+.art-ring { position: absolute; inset: 20px; border: 1px solid #d8eea84d; border-radius: 50%; }
+.ring-two { inset: 54px; border-color: #d8eea880; }
+.art-spark { position: absolute; top: 69px; left: 76px; color: var(--lime); font-size: 7rem; line-height: 1; }
+.art-label { position: absolute; right: 4px; bottom: 45px; color: #d8eea8; font-size: .66rem; font-weight: 700; letter-spacing: .2em; line-height: 1.6; }
+.site-footer { padding: 20px 0; border-top: 1px solid var(--line); color: #829087; font-size: .8rem; }
+.site-footer span { color: #8eaf56; }
+@media (max-width: 767px) {
+    .site-nav { padding: 14px 0; }
+    .nav-links { align-items: stretch; padding: 10px 0 4px; }
+    .nav-links .nav-link { padding-left: 12px !important; }
+    .content-wrap, .hobbies-wrap { padding-top: 58px; padding-bottom: 70px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact-card { min-height: 150px; }
+    .heading-stamp { width: 60px; height: 60px; font-size: 1rem; }
+    .hobby-panel { min-height: 440px; align-items: flex-start; padding-top: 48px; }
+    .hobby-art { top: auto; right: -30px; bottom: -93px; width: 240px; height: 240px; transform: none; opacity: .8; }
+    .art-spark { top: 51px; left: 61px; font-size: 5.5rem; }
+    .art-label { right: 5px; bottom: 40px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }

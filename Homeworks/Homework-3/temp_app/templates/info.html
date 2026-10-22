@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="container content-wrap">
+    <div class="eyebrow"><span class="eyebrow-line"></span> A LITTLE ABOUT ME</div>
+    <div class="page-heading-row">
+        <div><h1 class="page-title">Get to know <span>me.</span></h1><p class="page-lead">A few ways to get in touch.</p></div>
+        <div class="heading-stamp" aria-hidden="true">LG</div>
+    </div>
+    <div class="contact-grid">
+        {% for key, value in context.items %}
+        <article class="contact-card">
+            <span class="card-index">0{{ forloop.counter }}</span>
+            <p class="contact-label">{{ key }}</p>
+            <h2>{{ value }}</h2>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

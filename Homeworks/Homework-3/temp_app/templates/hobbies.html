@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="container content-wrap hobbies-wrap">
+    <div class="eyebrow"><span class="eyebrow-line"></span> LIFE OUTSIDE THE CLASSROOM</div>
+    <div class="hobby-panel">
+        <div class="hobby-copy">
+            <p class="panel-kicker">A work in progress <span>✦</span></p>
+            {% if grade > 12 %}
+            <h1 class="page-title">აბიტურიენტი<span>.</span></h1>
+            <p class="page-lead">ყოველი ახალი დღე ახალი შესაძლებლობაა.</p>
+            {% else %}
+            <h1 class="page-title">მომავალი<br>აბიტურიენტი<span>.</span></h1>
+            <p class="page-lead">სწავლა, ინტერესები და დიდი გეგმები — ყველაფერი თავის დროზე.</p>
+            {% endif %}
+        </div>
+        <div class="hobby-art" aria-hidden="true"><div class="art-ring ring-one"></div><div class="art-ring ring-two"></div><div class="art-spark">✳</div><div class="art-label">KEEP<br>GROWING</div></div>
+    </div>
+</section>
+{% endblock %}
