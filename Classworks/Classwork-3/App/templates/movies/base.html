@@ -1,0 +1,44 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}CineVerse{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'movies/style.css' %}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="{% url 'dashboard' %}" class="logo">
+            <span class="logo-icon">▶</span>
+            CINEVERSE
+        </a>
+
+        <div class="nav-links">
+            <a href="{% url 'dashboard' %}#movies">Movies</a>
+            <a href="{% url 'dashboard' %}#actors">Actors</a>
+            <a href="{% url 'dashboard' %}#directors">Directors</a>
+            <a href="{% url 'dashboard' %}#ratings">Ratings</a>
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2026 CINEVERSE — Your Movie Collection</p>
+    </footer>
+
+    <script src="{% static 'movies/script.js' %}"></script>
+
+</body>
+</html>

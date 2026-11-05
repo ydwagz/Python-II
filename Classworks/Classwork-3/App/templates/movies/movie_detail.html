@@ -1,0 +1,77 @@
+
+{% extends 'movies/base.html' %}
+
+{% block title %}{{ movie.name }} | CineVerse{% endblock %}
+
+{% block content %}
+
+<section class="detail-container">
+
+    <a href="{% url 'dashboard' %}#movies" class="back-link">
+        ← Back to Movies
+    </a>
+
+    <div class="detail-card">
+
+        <div class="detail-poster">
+            <span>▶</span>
+        </div>
+
+        <div class="detail-content">
+
+            <span class="section-label">MOVIE DETAILS</span>
+
+            <h1>{{ movie.name }}</h1>
+
+            <div class="detail-rating">
+                ⭐ {{ movie.rate|floatformat:1 }} / 10
+            </div>
+
+            <h3>Description</h3>
+            <p>{{ movie.description }}</p>
+
+            <div class="detail-divider"></div>
+
+            <h3>Director</h3>
+
+            {% if movie.author %}
+                <p>
+                    {{ movie.author.name }} {{ movie.author.surname }}
+                </p>
+            {% else %}
+                <p>Unknown Director</p>
+            {% endif %}
+
+            <div class="detail-divider"></div>
+
+            <h3>Cast</h3>
+
+            <div class="actors">
+                {% for actor in movie.actors.all %}
+
+                    <span class="tag">
+                        {{ actor.name }} {{ actor.surname }}
+                    </span>
+
+                {% empty %}
+                    <span>No actors assigned.</span>
+                {% endfor %}
+            </div>
+
+            <div class="detail-divider"></div>
+
+            <h3>Rating Record</h3>
+
+            {% if movie.rating %}
+                <span class="status-badge">Rating record exists</span>
+            {% else %}
+                <span class="status-badge missing">No rating record</span>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
