@@ -1,271 +1,124 @@
 
 {% extends 'movies/base.html' %}
 
-{% block title %}CineVerse | Movie Database{% endblock %}
+{% block title %}Dashboard | Cinematic{% endblock %}
+{% block heading %}Dashboard{% endblock %}
 
 {% block content %}
 
-<section class="hero">
-    <div class="hero-content">
-        <span class="hero-label">YOUR PERSONAL MOVIE DATABASE</span>
+<h1 class="page-title">Your movie universe.</h1>
+<p class="page-description">
+    Manage your movies, actors, directors and ratings in one place.
+</p>
 
-        <h1>
-            Discover the world<br>
-            of <span>cinema.</span>
-        </h1>
-
-        <p>
-            Explore movies, legendary actors, talented directors
-            and discover your movie collection.
-        </p>
-
-        <a href="#movies" class="hero-button">
-            Explore Movies →
-        </a>
-    </div>
-
-    <div class="hero-decoration">
-        <div class="circle circle-one"></div>
-        <div class="circle circle-two"></div>
-        <div class="play-symbol">▶</div>
-    </div>
-</section>
-
-
-<!-- STATISTICS -->
-
-<section class="stats">
+<div class="stats-grid">
 
     <div class="stat-card">
-        <span class="stat-icon">🎬</span>
-        <h2>{{ movie_count }}</h2>
-        <p>Total Movies</p>
+        <div class="stat-icon">▣</div>
+        <div class="stat-number" data-count="{{ movie_count }}">0</div>
+        <div class="stat-label">Total movies</div>
     </div>
 
     <div class="stat-card">
-        <span class="stat-icon">🎭</span>
-        <h2>{{ actor_count }}</h2>
-        <p>Total Actors</p>
+        <div class="stat-icon">♙</div>
+        <div class="stat-number" data-count="{{ actor_count }}">0</div>
+        <div class="stat-label">Total actors</div>
     </div>
 
     <div class="stat-card">
-        <span class="stat-icon">🎥</span>
-        <h2>{{ director_count }}</h2>
-        <p>Total Directors</p>
+        <div class="stat-icon">◉</div>
+        <div class="stat-number" data-count="{{ director_count }}">0</div>
+        <div class="stat-label">Total directors</div>
     </div>
 
     <div class="stat-card">
-        <span class="stat-icon">⭐</span>
-        <h2>{{ rating_count }}</h2>
-        <p>Total Rating Records</p>
+        <div class="stat-icon">☆</div>
+        <div class="stat-number" data-count="{{ rating_count }}">0</div>
+        <div class="stat-label">Rating records</div>
     </div>
 
-</section>
+</div>
 
+<div class="content-card">
+    <h3>Average movie rating</h3>
+    <p class="page-description" style="margin:10px 0 0">
+        {% if average_rating != None %}
+            <span class="rating">{{ average_rating|floatformat:1 }} / 10</span>
+        {% else %}
+            No ratings available yet.
+        {% endif %}
+    </p>
+</div>
 
-<!-- MOVIES -->
+<div class="section-header">
+    <h2>Recently added movies</h2>
+    <a href="{% url 'movies:movie_list' %}" class="btn">
+        View all →
+    </a>
+</div>
 
-<section class="section" id="movies">
+<div class="card-grid">
 
-    <div class="section-heading">
-        <div>
-            <span class="section-label">COLLECTION</span>
-            <h2>Featured Movies</h2>
+    {% for movie in movies %}
+    <a href="{% url 'movies:movie_detail' movie.pk %}" class="movie-card">
+
+        <h3>{{ movie.name }}</h3>
+
+        <p>{{ movie.description|truncatewords:18 }}</p>
+
+        <div class="movie-meta">
+            <span class="tag">
+                {{ movie.author|default:"No director" }}
+            </span>
+
+            <span class="tag rating">
+                ★ {{ movie.rate|floatformat:1 }}
+            </span>
         </div>
 
-        <span class="item-count">{{ movie_count }} Movies</span>
+    </a>
+    {% empty %}
+    <div class="empty-state">
+        No movies have been added yet.
     </div>
+    {% endfor %}
 
-    <div class="movie-grid">
+</div>
 
-        {% for movie in movies %}
+<div class="section-header">
+    <h2>Recently added actors</h2>
+    <a href="{% url 'movies:actor_list' %}" class="btn">View all →</a>
+</div>
 
-        <article class="movie-card">
+<div class="card-grid">
 
-            <div class="movie-poster">
-                <div class="poster-overlay">
-                    <span class="poster-play">▶</span>
-                </div>
-
-                <span class="movie-rating">
-                    ⭐ {{ movie.rate|floatformat:1 }}
-                </span>
-            </div>
-
-            <div class="movie-info">
-
-                <h3>{{ movie.name }}</h3>
-
-                <p class="movie-description">
-                    {{ movie.description|truncatewords:20 }}
-                </p>
-
-                <div class="movie-meta">
-                    <span>🎥
-                        {% if movie.author %}
-                            {{ movie.author.name }} {{ movie.author.surname }}
-                        {% else %}
-                            Unknown Director
-                        {% endif %}
-                    </span>
-                </div>
-
-                <div class="actors">
-                    {% for actor in movie.actors.all %}
-                        <span class="tag">
-                            {{ actor.name }} {{ actor.surname }}
-                        </span>
-                    {% empty %}
-                        <span class="tag">No actors</span>
-                    {% endfor %}
-                </div>
-
-                <a href="{% url 'movie_detail' movie.pk %}"
-                   class="details-link">
-                    View Details →
-                </a>
-
-            </div>
-
-        </article>
-
-        {% empty %}
-
-        <p class="empty-message">No movies available yet.</p>
-
-        {% endfor %}
-
+    {% for actor in actors %}
+    <div class="person-card">
+        <h3>{{ actor.name }} {{ actor.surname }}</h3>
+        <p>Actor in your movie database</p>
     </div>
-</section>
+    {% empty %}
+    <div class="empty-state">No actors available.</div>
+    {% endfor %}
 
+</div>
 
-<!-- ACTORS -->
+<div class="section-header">
+    <h2>Recently added directors</h2>
+    <a href="{% url 'movies:director_list' %}" class="btn">View all →</a>
+</div>
 
-<section class="section secondary-section" id="actors">
+<div class="card-grid">
 
-    <div class="section-heading">
-        <div>
-            <span class="section-label">CAST</span>
-            <h2>Our Actors</h2>
-        </div>
-
-        <span class="item-count">{{ actor_count }} Actors</span>
+    {% for director in directors %}
+    <div class="person-card">
+        <h3>{{ director.name }} {{ director.surname }}</h3>
+        <p>{{ director.movie_count|default:"0" }} movies</p>
     </div>
+    {% empty %}
+    <div class="empty-state">No directors available.</div>
+    {% endfor %}
 
-    <div class="people-grid">
-
-        {% for actor in actors %}
-
-        <div class="person-card">
-
-            <div class="person-avatar">🎭</div>
-
-            <h3>{{ actor.name }} {{ actor.surname }}</h3>
-
-            <p>Actor</p>
-
-            <div class="person-movies">
-                {% for movie in actor.actor_rara.all %}
-                    <span class="tag">{{ movie.name }}</span>
-                {% empty %}
-                    <span class="muted">No movies assigned</span>
-                {% endfor %}
-            </div>
-
-        </div>
-
-        {% empty %}
-
-        <p class="empty-message">No actors available.</p>
-
-        {% endfor %}
-
-    </div>
-</section>
-
-
-<!-- DIRECTORS -->
-
-<section class="section" id="directors">
-
-    <div class="section-heading">
-        <div>
-            <span class="section-label">CREATORS</span>
-            <h2>Our Directors</h2>
-        </div>
-
-        <span class="item-count">{{ director_count }} Directors</span>
-    </div>
-
-    <div class="people-grid">
-
-        {% for director in directors %}
-
-        <div class="person-card director-card">
-
-            <div class="person-avatar">🎬</div>
-
-            <h3>{{ director.name }} {{ director.surname }}</h3>
-
-            <p>Film Director</p>
-
-            <div class="person-movies">
-                {% for movie in director.filmebi.all %}
-                    <span class="tag">{{ movie.name }}</span>
-                {% empty %}
-                    <span class="muted">No movies assigned</span>
-                {% endfor %}
-            </div>
-
-        </div>
-
-        {% empty %}
-
-        <p class="empty-message">No directors available.</p>
-
-        {% endfor %}
-
-    </div>
-</section>
-
-
-<!-- RATINGS -->
-
-<section class="section secondary-section" id="ratings">
-
-    <div class="section-heading">
-        <div>
-            <span class="section-label">REVIEWS</span>
-            <h2>Movie Ratings</h2>
-        </div>
-
-        <span class="item-count">{{ rating_count }} Records</span>
-    </div>
-
-    <div class="rating-list">
-
-        {% for rating in ratings %}
-
-        <div class="rating-row">
-
-            <div>
-                <h3>{{ rating.rate.name }}</h3>
-                <p>Movie rating</p>
-            </div>
-
-            <div class="rating-score">
-                ⭐ {{ rating.rate.rate|floatformat:1 }}/10
-            </div>
-
-        </div>
-
-        {% empty %}
-
-        <p class="empty-message">No rating records available.</p>
-
-        {% endfor %}
-
-    </div>
-</section>
+</div>
 
 {% endblock %}

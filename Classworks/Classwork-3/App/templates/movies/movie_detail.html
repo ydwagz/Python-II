@@ -1,77 +1,78 @@
 
 {% extends 'movies/base.html' %}
 
-{% block title %}{{ movie.name }} | CineVerse{% endblock %}
+{% block title %}{{ movie.name }} | Cinematic{% endblock %}
+{% block heading %}Movie details{% endblock %}
 
 {% block content %}
 
-<section class="detail-container">
+<a href="{% url 'movies:movie_list' %}" class="btn">
+    ← Back to movies
+</a>
 
-    <a href="{% url 'dashboard' %}#movies" class="back-link">
-        ← Back to Movies
-    </a>
+<div style="margin-top:25px" class="detail-card">
 
-    <div class="detail-card">
+    <h1 class="page-title">{{ movie.name }}</h1>
 
-        <div class="detail-poster">
-            <span>▶</span>
+    <div class="movie-meta">
+        <span class="tag rating">
+            ★ {{ movie.rate|floatformat:1 }} / 10
+        </span>
+
+        <span class="tag">
+            {{ movie.actors.count }} actors
+        </span>
+    </div>
+
+    <p class="detail-description">
+        {{ movie.description }}
+    </p>
+
+    <div class="detail-info">
+
+        <div>
+            <small>Director</small>
+            <strong>
+                {% if movie.author %}
+                    {{ movie.author.name }} {{ movie.author.surname }}
+                {% else %}
+                    Unknown
+                {% endif %}
+            </strong>
         </div>
 
-        <div class="detail-content">
-
-            <span class="section-label">MOVIE DETAILS</span>
-
-            <h1>{{ movie.name }}</h1>
-
-            <div class="detail-rating">
-                ⭐ {{ movie.rate|floatformat:1 }} / 10
-            </div>
-
-            <h3>Description</h3>
-            <p>{{ movie.description }}</p>
-
-            <div class="detail-divider"></div>
-
-            <h3>Director</h3>
-
-            {% if movie.author %}
-                <p>
-                    {{ movie.author.name }} {{ movie.author.surname }}
-                </p>
-            {% else %}
-                <p>Unknown Director</p>
-            {% endif %}
-
-            <div class="detail-divider"></div>
-
-            <h3>Cast</h3>
-
-            <div class="actors">
-                {% for actor in movie.actors.all %}
-
-                    <span class="tag">
-                        {{ actor.name }} {{ actor.surname }}
-                    </span>
-
-                {% empty %}
-                    <span>No actors assigned.</span>
-                {% endfor %}
-            </div>
-
-            <div class="detail-divider"></div>
-
-            <h3>Rating Record</h3>
-
-            {% if movie.rating %}
-                <span class="status-badge">Rating record exists</span>
-            {% else %}
-                <span class="status-badge missing">No rating record</span>
-            {% endif %}
-
+        <div>
+            <small>Movie rating</small>
+            <strong class="rating">
+                {{ movie.rate|floatformat:1 }} / 10
+            </strong>
         </div>
 
     </div>
 
-</section>
+    <div class="section-header">
+        <h2>Cast members</h2>
+    </div>
+
+    <div class="card-grid">
+
+        {% for actor in movie.actors.all %}
+
+        <div class="person-card">
+            <h3>{{ actor.name }} {{ actor.surname }}</h3>
+            <p>Cast member</p>
+        </div>
+
+        {% empty %}
+
+        <div class="empty-state">
+            No actors assigned to this movie.
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
 
 {% endblock %}
