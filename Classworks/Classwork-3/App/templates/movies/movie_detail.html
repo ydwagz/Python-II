@@ -1,0 +1,78 @@
+
+{% extends 'movies/base.html' %}
+
+{% block title %}{{ movie.name }} | Cinematic{% endblock %}
+{% block heading %}Movie details{% endblock %}
+
+{% block content %}
+
+<a href="{% url 'movies:movie_list' %}" class="btn">
+    ← Back to movies
+</a>
+
+<div style="margin-top:25px" class="detail-card">
+
+    <h1 class="page-title">{{ movie.name }}</h1>
+
+    <div class="movie-meta">
+        <span class="tag rating">
+            ★ {{ movie.rate|floatformat:1 }} / 10
+        </span>
+
+        <span class="tag">
+            {{ movie.actors.count }} actors
+        </span>
+    </div>
+
+    <p class="detail-description">
+        {{ movie.description }}
+    </p>
+
+    <div class="detail-info">
+
+        <div>
+            <small>Director</small>
+            <strong>
+                {% if movie.author %}
+                    {{ movie.author.name }} {{ movie.author.surname }}
+                {% else %}
+                    Unknown
+                {% endif %}
+            </strong>
+        </div>
+
+        <div>
+            <small>Movie rating</small>
+            <strong class="rating">
+                {{ movie.rate|floatformat:1 }} / 10
+            </strong>
+        </div>
+
+    </div>
+
+    <div class="section-header">
+        <h2>Cast members</h2>
+    </div>
+
+    <div class="card-grid">
+
+        {% for actor in movie.actors.all %}
+
+        <div class="person-card">
+            <h3>{{ actor.name }} {{ actor.surname }}</h3>
+            <p>Cast member</p>
+        </div>
+
+        {% empty %}
+
+        <div class="empty-state">
+            No actors assigned to this movie.
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+
+{% extends 'movies/base.html' %}
+
+{% block title %}Directors | Cinematic{% endblock %}
+{% block heading %}Directors{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">Film directors</h1>
+<p class="page-description">
+    Explore the directors behind your movie collection.
+</p>
+
+<div class="card-grid">
+
+    {% for director in directors %}
+
+    <div class="person-card">
+
+        <div class="stat-icon">◉</div>
+
+        <h3>{{ director.name }} {{ director.surname }}</h3>
+
+        <p>
+            {{ director.movie_count }} movie{{ director.movie_count|pluralize }}
+        </p>
+
+        <div class="movie-meta">
+
+            {% for movie in director.filmebi.all %}
+
+            <a href="{% url 'movies:movie_detail' movie.pk %}"
+               class="tag">
+                {{ movie.name }}
+            </a>
+
+            {% empty %}
+
+            <span class="tag">No movies assigned</span>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="empty-state">
+        No directors found.
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+
+{% extends 'movies/base.html' %}
+
+{% block title %}Movies | Cinematic{% endblock %}
+{% block heading %}Movies{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">Movie collection</h1>
+<p class="page-description">
+    Explore every movie stored in your database.
+</p>
+
+<div class="card-grid">
+
+    {% for movie in movies %}
+
+    <a href="{% url 'movies:movie_detail' movie.pk %}" class="movie-card">
+
+        <h3>{{ movie.name }}</h3>
+
+        <p>{{ movie.description|truncatewords:25 }}</p>
+
+        <div class="movie-meta">
+            <span class="tag">
+                Director: {{ movie.author|default:"Unknown" }}
+            </span>
+
+            <span class="tag rating">
+                ★ {{ movie.rate|floatformat:1 }}
+            </span>
+        </div>
+
+        <div class="section-header">
+            <small>Actors: {{ movie.actors.count }}</small>
+            <span class="tag">View details →</span>
+        </div>
+
+    </a>
+
+    {% empty %}
+
+    <div class="empty-state">
+        <h3>No movies found</h3>
+        <p>Add movies through the Django admin panel.</p>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

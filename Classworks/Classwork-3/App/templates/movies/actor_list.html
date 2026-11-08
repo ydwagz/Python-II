@@ -1,0 +1,54 @@
+
+{% extends 'movies/base.html' %}
+
+{% block title %}Actors | Cinematic{% endblock %}
+{% block heading %}Actors{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">Cast & actors</h1>
+<p class="page-description">
+    Discover all actors and their film appearances.
+</p>
+
+<div class="card-grid">
+
+    {% for actor in actors %}
+
+    <div class="person-card">
+
+        <div class="stat-icon">♙</div>
+
+        <h3>{{ actor.name }} {{ actor.surname }}</h3>
+
+        <p>
+            {{ actor.movie_count }} movie{{ actor.movie_count|pluralize }}
+        </p>
+
+        <div class="movie-meta">
+
+            {% for movie in actor.actor_rara.all %}
+
+            <span class="tag">{{ movie.name }}</span>
+
+            {% empty %}
+
+            <span class="tag">No movies assigned</span>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="empty-state">
+        No actors found.
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

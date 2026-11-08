@@ -1,0 +1,124 @@
+
+{% extends 'movies/base.html' %}
+
+{% block title %}Dashboard | Cinematic{% endblock %}
+{% block heading %}Dashboard{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">Your movie universe.</h1>
+<p class="page-description">
+    Manage your movies, actors, directors and ratings in one place.
+</p>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <div class="stat-icon">▣</div>
+        <div class="stat-number" data-count="{{ movie_count }}">0</div>
+        <div class="stat-label">Total movies</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">♙</div>
+        <div class="stat-number" data-count="{{ actor_count }}">0</div>
+        <div class="stat-label">Total actors</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">◉</div>
+        <div class="stat-number" data-count="{{ director_count }}">0</div>
+        <div class="stat-label">Total directors</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">☆</div>
+        <div class="stat-number" data-count="{{ rating_count }}">0</div>
+        <div class="stat-label">Rating records</div>
+    </div>
+
+</div>
+
+<div class="content-card">
+    <h3>Average movie rating</h3>
+    <p class="page-description" style="margin:10px 0 0">
+        {% if average_rating != None %}
+            <span class="rating">{{ average_rating|floatformat:1 }} / 10</span>
+        {% else %}
+            No ratings available yet.
+        {% endif %}
+    </p>
+</div>
+
+<div class="section-header">
+    <h2>Recently added movies</h2>
+    <a href="{% url 'movies:movie_list' %}" class="btn">
+        View all →
+    </a>
+</div>
+
+<div class="card-grid">
+
+    {% for movie in movies %}
+    <a href="{% url 'movies:movie_detail' movie.pk %}" class="movie-card">
+
+        <h3>{{ movie.name }}</h3>
+
+        <p>{{ movie.description|truncatewords:18 }}</p>
+
+        <div class="movie-meta">
+            <span class="tag">
+                {{ movie.author|default:"No director" }}
+            </span>
+
+            <span class="tag rating">
+                ★ {{ movie.rate|floatformat:1 }}
+            </span>
+        </div>
+
+    </a>
+    {% empty %}
+    <div class="empty-state">
+        No movies have been added yet.
+    </div>
+    {% endfor %}
+
+</div>
+
+<div class="section-header">
+    <h2>Recently added actors</h2>
+    <a href="{% url 'movies:actor_list' %}" class="btn">View all →</a>
+</div>
+
+<div class="card-grid">
+
+    {% for actor in actors %}
+    <div class="person-card">
+        <h3>{{ actor.name }} {{ actor.surname }}</h3>
+        <p>Actor in your movie database</p>
+    </div>
+    {% empty %}
+    <div class="empty-state">No actors available.</div>
+    {% endfor %}
+
+</div>
+
+<div class="section-header">
+    <h2>Recently added directors</h2>
+    <a href="{% url 'movies:director_list' %}" class="btn">View all →</a>
+</div>
+
+<div class="card-grid">
+
+    {% for director in directors %}
+    <div class="person-card">
+        <h3>{{ director.name }} {{ director.surname }}</h3>
+        <p>{{ director.movie_count|default:"0" }} movies</p>
+    </div>
+    {% empty %}
+    <div class="empty-state">No directors available.</div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
